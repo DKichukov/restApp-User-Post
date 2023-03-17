@@ -1,30 +1,32 @@
 package restapp.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import restapp.entities.User;
-import restapp.repositories.UserRepository;
+import restapp.services.UserService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class UserController {
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
+
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userService.findAll();
     }
 
     @GetMapping("/users/{id}")
-    public Optional<User> getUser(@PathVariable Integer id) {
-        Optional<User> user = userRepository.findById(id);
-    return user;
+    public User getUser(@PathVariable Integer id) {
+        return userService.findUserById(id);
+    }
+
+    @PostMapping("/users")
+    public void createUser(@RequestBody User user) {
+        userService.saveUser(user);
     }
 }
