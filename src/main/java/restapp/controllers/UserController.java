@@ -20,13 +20,18 @@ public class UserController {
         return userService.findAll();
     }
 
+    @PostMapping("/users/new")
+    public void createUser(@RequestBody User user) {
+        userService.saveUser(user);
+    }
+
     @GetMapping("/users/{id}")
     public User getUser(@PathVariable Integer id) {
         return userService.findUserById(id);
     }
 
-    @PostMapping("/users")
-    public void createUser(@RequestBody User user) {
-        userService.saveUser(user);
+    @DeleteMapping("/users/{id}")
+    public void deleteUser(@PathVariable Integer id) {
+       userService.deleteUserById(id);
     }
 }
