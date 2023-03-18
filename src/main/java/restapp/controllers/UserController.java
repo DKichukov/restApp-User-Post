@@ -1,5 +1,6 @@
 package restapp.controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import restapp.entities.User;
 import restapp.services.UserService;
@@ -21,7 +22,7 @@ public class UserController {
     }
 
     @PostMapping("/users/new")
-    public void createUser(@RequestBody User user) {
+    public void createUser(@Valid @RequestBody User user) {
         userService.saveUser(user);
     }
 
